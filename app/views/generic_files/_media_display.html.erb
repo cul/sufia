@@ -20,14 +20,14 @@
 
 <% elsif @generic_file.pdf? %>
 
-  <%= render_download_icon "Download the full-sized PDF" %>
+  <%= render_download_icon @generic_file, "Download the full-sized PDF" %>
 
 <% elsif @generic_file.office_document? %>
 
-    <%= render_download_icon "Download the full-sized Document" %>
+    <%= render_download_icon @generic_file, "Download the full-sized Document" %>
 
 <% else %>
 
-  <%= render_download_icon %>
+  <%= render_download_icon @generic_file %>
 
 <% end %>

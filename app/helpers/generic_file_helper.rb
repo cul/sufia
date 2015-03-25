@@ -9,16 +9,16 @@ module GenericFileHelper
     Sufia::PresenterRenderer.new(presenter, self).fields(terms, &block)
   end
 
-  def render_download_icon title = nil
+  def render_download_icon gf, title = nil
     if title.nil?
-      link_to download_image_tag, sufia.download_path(@generic_file), { target: "_blank", title: "Download the document", id: "file_download", data: { label: @generic_file.id } }
+      link_to download_image_tag(gf), sufia.download_path(gf), { target: "_blank", title: "Download the document", id: "file_download", data: { label: gf.id } }
     else
-      link_to (download_image_tag(title) + title), sufia.download_path(@generic_file), { target: "_blank", title: title, id: "file_download", data: { label: @generic_file.id } }
+      link_to (download_image_tag(gf, title) + title), sufia.download_path(gf), { target: "_blank", title: title, id: "file_download", data: { label: gf.id } }
     end
   end
 
-  def render_download_link text = nil
-    link_to (text || "Download"), sufia.download_path(@generic_file), { id: "file_download", target: "_new", data: { label: @generic_file.id } }
+  def render_download_link gf, text = nil
+    link_to (text || "Download"), sufia.download_path(gf), { id: "file_download", target: "_new", data: { label: gf.id } }
   end
 
   def render_collection_list gf
@@ -28,24 +28,24 @@ module GenericFileHelper
   end
 
   def display_multiple value
-    auto_link(value.join(" | "))
+    auto_link(Array(value).join(" | "))
   end
 
   private
 
-  def download_image_tag title = nil
+  def download_image_tag gf, title = nil
     if title.nil?
       image_tag "default.png", { alt: "No preview available", class: "img-responsive" }
     else
-      image_tag sufia.download_path(@generic_file, file: 'thumbnail'), { class: "img-responsive", alt: "#{title} of #{@generic_file.title.first}" }
+      image_tag sufia.download_path(gf, file: 'thumbnail'), { class: "img-responsive", alt: "#{title} of #{gf.title.first}" }
     end
   end
 
-  def render_visibility_badge
-    if can? :edit, @generic_file
-      render_visibility_link @generic_file
+  def render_visibility_badge(gf)
+    if can? :edit, gf
+      render_visibility_link gf
     else
-      render_visibility_label @generic_file
+      render_visibility_label gf
     end
   end
 
