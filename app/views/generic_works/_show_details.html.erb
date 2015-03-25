@@ -1,0 +1,17 @@
+<h2>File Details</h2>
+<dl class="dl-horizontal file-show-term file-show-details">
+  <dt>Depositor</dt>
+  <dd itemprop="accountablePerson" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><%= link_to_profile @generic_work.depositor %></span></dd>
+  <dt>Date Uploaded</dt>
+  <dd itemprop="datePublished"><%= @generic_work.date_uploaded %></dd>
+  <dt>Date Modified</dt>
+  <dd itemprop="dateModified"><%= @generic_work.date_modified %></dd>
+  <dt>Audit Status</dt>
+  <dd><%= @audit_status %></dd>
+  <% unless @generic_work.related_files.empty? %>
+  <dt>Related Files</dt>
+      <% @generic_work.related_files.each do |f| %>
+          <dd><%= link_to(f.label, sufia.generic_file_url(f)) %></dd>
+      <% end %>
+  <% end %>
+</dl>

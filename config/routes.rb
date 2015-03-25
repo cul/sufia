@@ -27,6 +27,17 @@ Sufia::Engine.routes.draw do
     end
   end
 
+  # Generic file routes
+  resources :generic_works, path: :works, except: :index do
+    member do
+      resource :featured_work, only: [:create, :destroy]
+      resources :transfers, as: :generic_work_transfers, only: [:new, :create]
+      get 'citation'
+      get 'stats'
+      post 'audit'
+    end
+  end
+
   # Depositors routes for proxy deposit
   post 'users/:user_id/depositors' => 'depositors#create', as: 'user_depositors'
   delete 'users/:user_id/depositors/:id' => 'depositors#destroy', as: 'user_depositor'
