@@ -11,7 +11,6 @@ module Sufia
     delegate :depositor, :permissions, to: :model
 
     def tweeter
-      return nil
       user = ::User.find_by_user_key(model.depositor)
       if user.try(:twitter_handle).present?
         "@#{user.twitter_handle}"
